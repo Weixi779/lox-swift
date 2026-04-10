@@ -17,7 +17,7 @@ public class LoxScanner {
             start = current
             scanToken()
         }
-        tokens.append(Token(type: .eof, lexeme: "", literal: nil, line: line))
+        tokens.append(Token(type: .eof, lexeme: "", literal: .nil, line: line))
         return tokens
     }
 
@@ -77,7 +77,7 @@ public class LoxScanner {
         advance() // closing "
 
         let value = String(characters[start + 1 ..< current - 1])
-        addToken(.string, literal: value)
+        addToken(.string, literal: .string(value))
     }
 
     private func scanNumber() {
@@ -88,7 +88,7 @@ public class LoxScanner {
             while peek().isWholeNumber { advance() }
         }
 
-        addToken(.number, literal: Double(String(characters[start..<current]))!)
+        addToken(.number, literal: .number(Double(String(characters[start..<current]))!))
     }
 
     private func scanIdentifier() {
@@ -123,7 +123,7 @@ public class LoxScanner {
         return true
     }
 
-    private func addToken(_ type: TokenType, literal: Any? = nil) {
+    private func addToken(_ type: TokenType, literal: LoxValue = .nil) {
         let lexeme = String(characters[start..<current])
         tokens.append(Token(type: type, lexeme: lexeme, literal: literal, line: line))
     }

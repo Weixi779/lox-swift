@@ -81,14 +81,14 @@ struct ScannerTests {
         @Test func value() throws {
             let token = try #require(scan(#""hello""#).first)
             #expect(token.type == .string)
-            #expect(token.literal as? String == "hello")
+            #expect(token.literal == .string("hello"))
             #expect(token.lexeme == #""hello""#)
         }
         
         @Test func multilineString() throws {
             let token = try #require(scan("\"line1\nline2\"").first)
             #expect(token.type == .string)
-            #expect(token.literal as? String == "line1\nline2")
+            #expect(token.literal == .string("line1\nline2"))
         }
     }
     
@@ -104,7 +104,7 @@ struct ScannerTests {
         func numberValue(input: String, expected: Double) throws {
             let token = try #require(scan(input).first)
             #expect(token.type == .number)
-            #expect(token.literal as? Double == expected)
+            #expect(token.literal == .number(expected))
         }
         
         @Test func trailingDotIsNotPartOfNumber() {
