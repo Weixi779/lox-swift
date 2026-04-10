@@ -23,6 +23,14 @@ public enum Lox {
         report(line: line, where: "", message: message)
     }
 
+    static func error(token: Token, message: String) {
+        if token.type == .eof {
+            report(line: token.line, where: " at end", message: message)
+        } else {
+            report(line: token.line, where: " at '\(token.lexeme)'", message: message)
+        }
+    }
+
     private static func report(line: Int, where location: String, message: String) {
         fputs("[line \(line)] Error\(location): \(message)\n", stderr)
         hadError = true

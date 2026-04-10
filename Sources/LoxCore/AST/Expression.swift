@@ -1,4 +1,4 @@
-indirect enum Expression {
+public indirect enum Expression {
     case binary(left: Expression, op: Token, right: Expression)
     case grouping(expression: Expression)
     case literal(value: LoxValue)
